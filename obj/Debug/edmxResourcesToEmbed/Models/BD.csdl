@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OOORulModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Datas">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Permisions" Relationship="Self.FK_Datas_Permisions" FromRole="Datas" ToRole="Permisions" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_Order_Datas" FromRole="Datas" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="ItemList">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Amount" Type="Int32" Nullable="false" />
+    <Property Name="Sale" Type="Int32" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Photo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Order" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Merch" Relationship="Self.FK_ItemList_Merch" FromRole="ItemList" ToRole="Merch" />
+    <NavigationProperty Name="Order1" Relationship="Self.FK_ItemList_Order" FromRole="ItemList" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Merch">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Photo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Sale" Type="Int32" />
+    <NavigationProperty Name="ItemList" Relationship="Self.FK_ItemList_Merch" FromRole="Merch" ToRole="ItemList" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Client" Type="Int32" Nullable="false" />
+    <Property Name="Location" Type="Int32" Nullable="false" />
+    <Property Name="Sale" Type="Int32" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Code" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Datas" Relationship="Self.FK_Order_Datas" FromRole="Order" ToRole="Datas" />
+    <NavigationProperty Name="ItemList" Relationship="Self.FK_ItemList_Order" FromRole="Order" ToRole="ItemList" />
+    <NavigationProperty Name="Points" Relationship="Self.FK_Order_Points" FromRole="Order" ToRole="Points" />
+    <NavigationProperty Name="Status1" Relationship="Self.FK_Order_Status" FromRole="Order" ToRole="Status" />
+  </EntityType>
+  <EntityType Name="Permisions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Datas" Relationship="Self.FK_Datas_Permisions" FromRole="Permisions" ToRole="Datas" />
+  </EntityType>
+  <EntityType Name="Points">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Location" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_Order_Points" FromRole="Points" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_Order_Status" FromRole="Status" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Datas_Permisions">
+    <End Role="Permisions" Type="Self.Permisions" Multiplicity="1" />
+    <End Role="Datas" Type="Self.Datas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Permisions">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Datas">
+        <PropertyRef Name="Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Datas">
+    <End Role="Datas" Type="Self.Datas" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Datas">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemList_Merch">
+    <End Role="Merch" Type="Self.Merch" Multiplicity="1" />
+    <End Role="ItemList" Type="Self.ItemList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Merch">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ItemList">
+        <PropertyRef Name="Name" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemList_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="ItemList" Type="Self.ItemList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ItemList">
+        <PropertyRef Name="Order" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Points">
+    <End Role="Points" Type="Self.Points" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Points">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Location" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Status" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OOORulEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Datas" EntityType="Self.Datas" />
+    <EntitySet Name="ItemList" EntityType="Self.ItemList" />
+    <EntitySet Name="Merch" EntityType="Self.Merch" />
+    <EntitySet Name="Order" EntityType="Self.Order" />
+    <EntitySet Name="Permisions" EntityType="Self.Permisions" />
+    <EntitySet Name="Points" EntityType="Self.Points" />
+    <EntitySet Name="Status" EntityType="Self.Status" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_Datas_Permisions" Association="Self.FK_Datas_Permisions">
+      <End Role="Permisions" EntitySet="Permisions" />
+      <End Role="Datas" EntitySet="Datas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Datas" Association="Self.FK_Order_Datas">
+      <End Role="Datas" EntitySet="Datas" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemList_Merch" Association="Self.FK_ItemList_Merch">
+      <End Role="Merch" EntitySet="Merch" />
+      <End Role="ItemList" EntitySet="ItemList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemList_Order" Association="Self.FK_ItemList_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="ItemList" EntitySet="ItemList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Points" Association="Self.FK_Order_Points">
+      <End Role="Points" EntitySet="Points" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Status" Association="Self.FK_Order_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
